@@ -49,7 +49,7 @@ a single additional class, 'rare.' To decide that cutoff point, the training cla
 
 </center>
 
-* Image values rescaled between 0 and 1
+* Pixel values rescaled between 0 and 1
 * Conv Block
   * 32 3x3 filters, max pooling 2x2, batch normalization, ReLu
   * 64 3x3 filters, max pooling 2x2, batch normalization, ReLu
@@ -104,7 +104,7 @@ Despite generous use of dropout layers, all models show some signs of overfittin
 
 |Baseline|XCeption|ResNet152V2|InceptionResNet|FCN|
 |:------:|:------:|:------:|:------:|:------:|
-|0.95|0.90|0.85|NA|0.17|
+|0.95|0.90|0.85|NA|0.14|
 
 </center>
 
@@ -116,14 +116,14 @@ To get an idea of what the model is getting wrong, here is a small view of a mis
 
 </center>
 
-Other than a slight readiness to classify characters as 'rare', many of these misclassifications are understandable, would even be hard for the human eye to distinguish in a cursive script. When the model does misclassify, it often mistakes one character for another with similar radicals, or component parts. take, for example, the last line from the printout above: **王**　was mistaken for **玉** three times and **ヱ** once.
+Other than a slight readiness to classify characters as 'rare', many of these misclassifications are understandable, would even be hard for the human eye to distinguish in a cursive script. When the model does misclassify, it often mistakes one character for another with similar radicals, or component parts. Take, for example, the last line from the printout above: **王** was mistaken for **玉** three times and **ヱ** once.
 
 
 ## Conclusion
 
 While the baseline, Xception, and ResNet models all converged and produced comparable results, The InceptionResNet and FCN models didn't produce comparable accuracies on test data AND took longer to train (in the case of the FCN, much longer). At present, those two models don't show as much promise as the first three, but I still think the FCN has potential because of its success in other arenas, namely semantic segmentation.
 
-At present, simple seems to have been better: the best performing and also fastest converging model is the made-from-scratch "baseline," taking fewer than 10 epochs to converge (compared to the 30 used on transfer learning models) and achieving 0.95 accuracy on test data. These results were achieved by converting images to grayscale, zero-padding to square shapes, resizing to 80x80 pixels, and rescaling pixel values between 0 and 1. The top 513 most frequently appearing characters, making up 90% of train data, retained their classes, while the remaining, rarer characters where put into a single class (total 514 classes). The data was then fed through said relatively simple CNN, architecture above, which made heavy use of batch normalization.
+At present, simple seems to have been better: the best performing and also fastest converging model is the made-from-scratch "baseline," taking fewer than ~5 epochs to converge (compared to the ~10 used on transfer learning models) and achieving 0.95 accuracy on test data. These results were achieved by converting images to grayscale, zero-padding to square shapes, resizing to 80x80 pixels, and rescaling pixel values between 0 and 1. The top 513 most frequently appearing characters, making up 90% of train data, retained their classes, while the remaining, rarer characters where put into a single class (total 514 classes). The data was then fed through said relatively simple CNN, architecture above, which made heavy use of batch normalization.
 
 ## Author
 
