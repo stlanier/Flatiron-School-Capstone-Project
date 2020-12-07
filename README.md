@@ -23,25 +23,31 @@ Data for this project can be downloaded from [Kuzushiji Recognition](https://www
 ### Preprocessing and EDA
 The dataset is made up of 683484 images, resized to 80x80 pixels, cast to grayscale, and zero-padded.
 
-<p align="center">
-  <img src="images/ex5.png"/> <img src="images/ex1.png"/> <img src="images/ex2.png"/> <img src="images/ex3.png"/> <img src="images/ex4.png"/> </br>
-</p>
+<center>
+
+  ![Example 5](images/ex5.png) ![Example 1](images/ex1.png) ![Example 2](images/ex2.png) ![Example3](images/ex3.png) ![Example 4](images/ex4.png)
+
+</center>
 
 With more than 4000 unique characters, many of which had only a handful of
 training examples, I chose to keep the original character classifications only up to
 a certain frequency, after which I clumped all remaining characters into
 a single additional class, 'rare.' To decide that cutoff point, the training classes were sorted by decreasing frequency and plotted to more easily find the bulk of the data. I found that 90% of my data was made up of the top 513 most common characters; I kept each of those classes and made the one additional 'rare' class to group all the rarer characters together for a total of 514 classes.
 
-<p align="center">
-  <img src="images/cutoff.png"/>
-</p>
+<center>
+
+  ![90% cutoff graphed](images/cutoff.png)
+
+</center>
 
 ## Training Models
 
 ### Baseline
-<p align="center">
-  <img src="images/baseline_model.png"/>
-</p>
+<center>
+
+  ![Graphic representation of baseline model](images/baseline_model.png)
+
+</center>
 
 * Image values rescaled between 0 and 1
 * Conv Block
@@ -79,20 +85,38 @@ a single additional class, 'rare.' To decide that cutoff point, the training cla
 
 ## Results
 
-<p align="center">
-  <img src="images/activations.png"/>
-</p>
+<center>
 
-<p align="center">
-  <img src="images/comparison.png"/>
-</p>
+  ![Visualizing intermediate activations](images/activations.png)
+
+</center>
+
+
+<center>
+
+  ![Network training history for CNN, transfer with Xception, transfer with ResNet152V2](images/comparison.png)
+
+</center>
 
 Despite generous use of dropout layers, all models show some signs of overfitting, seen in continued performance improvement on train data long after performance on validation has plateaued. Final accuracies on test data were as follows:
+
+<center>
 
 |Baseline|XCeption|ResNet152V2|InceptionResNet|FCN|
 |:------:|:------:|:------:|:------:|:------:|
 |0.95|0.90|0.85|NA|0.17|
 
+</center>
+
+To get an idea of what the model is getting wrong, here is a small view of a misclassification report, which shows the character, the number of training examples in parenthesis, and a list of ways it was misclassified:
+
+<center>
+
+  ![Example misclassifications.](images/ex_misclass.png)
+
+</center>
+
+Other than a slight readiness to classify characters as 'rare', many of these misclassifications are understandable, would even be hard for the human eye to distinguish in a cursive script. When the model does misclassify, it often mistakes one character for another with similar radicals, or component parts. take, for example, the last line from the printout above: **王**　was mistaken for **玉** three times and **ヱ** once.
 
 
 ## Conclusion
