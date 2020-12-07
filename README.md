@@ -99,6 +99,8 @@ Despite generous use of dropout layers, all models show some signs of overfittin
 
 While the baseline, Xception, and ResNet models all converged and produced comparable results, The InceptionResNet and FCN models didn't produce comparable accuracies on test data AND took longer to train (in the case of the FCN, much longer). At present, those two models don't show as much promise as the first three, but I still think the FCN has potential because of its success in other arenas, namely semantic segmentation.
 
+At present, simple seems to have been better: the best performing and also fastest converging model is the made-from-scratch "baseline," taking fewer than 10 epochs to converge (compared to the 30 used on transfer learning models) and achieving 0.95 accuracy on test data. These results were achieved by converting images to grayscale, zero-padding to square shapes, resizing to 80x80 pixels, and rescaling pixel values between 0 and 1. The top 513 most frequently appearing characters, making up 90% of train data, retained their classes, while the remaining, rarer characters where put into a single class (total 514 classes). The data was then fed through said relatively simple CNN, architecture above, which made heavy use of batch normalization.
+
 ## Author
 
 **Stephen Lanier** <br/>
