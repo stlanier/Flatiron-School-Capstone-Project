@@ -1,6 +1,8 @@
 # Japanese Kuzushiji Character Classification
+>“Japan has millions of books and over a billion historical documents… [and yet] there are very few fluent readers of kuzushiji today (only 0.01% of modern Japanese natives).”</br>
+>[Kuzushiji Recognition](https://www.kaggle.com/c/kuzushiji-recognition)</br>
 
-
+Japanese characters, of which there are more than 4,000, are especially hard to recognize as kuzushiji, cursive—font characters. The goal of this project is to create a classifier that can identify the most common of these characters and tag the remainder as rare characters. Convolutional neural networks are used, with transfer learning and a fully convolutional network explored to increase baseline performance.
 
 ## Getting Started
 
@@ -54,7 +56,7 @@ a single additional class, 'rare.' To decide that cutoff point, the training cla
 * Output 514, softmax
 
 ### Transfer Learning
-* Conv Base: Xception OR Resnet152V2
+* Conv Base: **Xception** OR **Resnet152V2**
   * Last 6 layers unfrozen
 * Global average pooling, 0.2 dropout
 * Fully Connected Block
@@ -81,10 +83,21 @@ a single additional class, 'rare.' To decide that cutoff point, the training cla
   <img src="images/activations.png"/>
 </p>
 
+<p align="center">
+  <img src="images/comparison.png"/>
+</p>
+
+Despite generous use of dropout layers, all models show some signs of overfitting, seen in continued performance improvement on train data long after performance on validation has plateaued. Final accuracies on test data were as follows:
+
+|Baseline|XCeption|ResNet152V2|InceptionResNet|FCN|
+|:------:|:------:|:------:|:------:|:------:|
+|0.95|0.90|0.85|NA|0.17|
 
 
 
 ## Conclusion
+
+While the baseline, Xception, and ResNet models all converged and produced comparable results, The InceptionResNet and FCN models didn't produce comparable accuracies on test data AND took longer to train (in the case of the FCN, much longer). At present, those two models don't show as much promise as the first three, but I still think the FCN has potential because of its success in other arenas, namely semantic segmentation.
 
 ## Author
 
